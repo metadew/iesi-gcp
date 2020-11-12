@@ -1,0 +1,41 @@
+iesi:
+  gcp:
+    spec:
+      name: "dlp-sample"
+      project: ""
+      pubsub:
+        - name: "dlp-sample"
+          topics:
+            - name: "dlp-in"
+              subscriptions:
+                - name: "dlp-in-sub"
+            - name: "dlp-out"
+              subscriptions:
+                - name: "dlp-out-sub"
+        - name: "bql-sample"
+          topics:
+            - name: "iesi-scriptresults"
+              subscriptions:
+                - name: "iesi-scriptresults-bigquery"
+      dlp:
+        - name: "dlp-sample"
+          input: "dlp-in-sub"
+          output: "dlp-out"
+      bql:
+        - name: "bql-sample"
+          input: "iesi-scriptresults-bigquery"
+          bigquery:
+            scriptresult:
+              load: true
+              dataset: "iesi_script_results_sample"
+            scriptexecution:
+              load: false
+              dataset: "iesi_script_results_sample"
+          output: ""
+      bigquery:
+        - name: "bql-sample"
+          datasets:
+            - name: "iesi_script_results_sample"
+              tables:
+                - name: "scriptresult"
+                - name: "scriptexecution"
